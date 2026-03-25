@@ -103,16 +103,16 @@ def build_model(hp):
     return model
 
 def run_hyperparameter_search(X_train, y_train):
-    """Запуск поиска гиперпараметров БЕЗ tensorboard"""
     tuner = Hyperband(
         build_model,
         objective='val_accuracy',
-        max_epochs=20,
+        max_epochs=15,
         factor=3,
+        max_retries_per_trial=0,  # Без повторов
+        executions_per_trial=1,   # 1 модель на trial
         directory='cifar10_tuning',
         project_name='cifar10_cnn',
-        seed=42,
-        overwrite=True  # Очищает предыдущие результаты
+        overwrite=True
     )
 
     early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
@@ -120,9 +120,9 @@ def run_hyperparameter_search(X_train, y_train):
     print("Начинаем автоматический подбор гиперпараметров...")
     tuner.search(
         X_train, y_train,
-        epochs=30,  # Уменьшил для быстрого теста
+        epochs=15,
         validation_split=0.2,
-        batch_size=64,  # Уменьшил batch_size
+        batch_size=256,
         callbacks=[early_stopping],
         verbose=1
     )
@@ -133,7 +133,7 @@ def run_hyperparameter_search(X_train, y_train):
 def evaluate_top_models(tuner, X_test, y_test):
     """Оценка топ-5 моделей"""
     top5_models = tuner.get_best_models(num_models=5)
-    print("\n=== ТОП-5 ЛУЧШИХ АРХИТЕКТУР ===")
+    print("\nТОП-5 ЛУЧШИХ АРХИТЕКТУР")
 
     results = []
     for i, model in enumerate(top5_models):
