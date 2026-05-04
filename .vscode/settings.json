@@ -1,0 +1,22 @@
+{
+  "ruff.enable": true,
+  "ruff.experimental.codeActions": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.ruff": "explicit",
+    "source.organizeImports.ruff": "explicit",
+    "source.formatDocument.ruff": "explicit"
+  },
+  "python.defaultInterpreterPath": "/home/ra-naun/Desktop/projects/kat/system_of_ai_lab1/.venv/bin/python",
+  "python.terminal.activateEnvironment": true,
+  "python.linting.enabled": false,
+  "python.formatting.provider": "none",
+  "[python]": {
+    "editor.defaultFormatter": "ruff.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    }
+  }
+}
